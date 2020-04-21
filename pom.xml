@@ -23,7 +23,7 @@
         <protostuff.version>1.0.10</protostuff.version>
         <objenesis.version>2.4</objenesis.version>
         <junit.version>4.11</junit.version>
-        <zookeeper.version>3.4.8</zookeeper.version>
+        <zookeeper.version>3.4.14</zookeeper.version>
         <curator.version>4.0.1</curator.version>
     </properties>
 
