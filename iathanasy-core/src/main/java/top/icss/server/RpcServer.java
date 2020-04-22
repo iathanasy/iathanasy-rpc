@@ -46,12 +46,14 @@ public class RpcServer {
     public RpcServer(ServiceRegister serviceRegistry, int port){
         this.serviceRegistry = serviceRegistry;
         this.port = port;
-        init("");
     }
 
     public void init(String basePackage){
-        boolean flag = null == basePackage && ("").equals(basePackage);
-        IocContainer ioc = new IocContainer(flag ? "top.icss" : basePackage);
+        String defaultPackage = "top.icss";
+        if(null == basePackage && "".equals(basePackage)){
+            basePackage = defaultPackage;
+        }
+        IocContainer ioc = new IocContainer(basePackage);
         Map<String, Object> beans = ioc.getBeans();
         beans.values().forEach((obj)->{
             serviceMap.put(obj.getClass().getInterfaces()[0].getName(), obj);
@@ -63,6 +65,9 @@ public class RpcServer {
      * @throws Exception
      */
     public void start() throws Exception {
+        if(serviceMap.isEmpty()){
+            log.warn("rpc service beans empty");
+        }
         ServerBootstrap b = new ServerBootstrap();
         try {
             b.group(boss, work)

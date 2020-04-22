@@ -6,6 +6,9 @@ import top.icss.server.RpcServer;
 /**
  * @author cd
  * @desc 暴露服务
+ *  1. 先启动 zk
+ *  2. 在启动服务 (修改端口可启动多个)
+ *  3. 启动客户端 (可多个)
  * @create 2020/4/16 14:54
  * @since 1.0.0
  */

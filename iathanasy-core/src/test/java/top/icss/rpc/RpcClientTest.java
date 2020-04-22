@@ -37,5 +37,6 @@ public class RpcClientTest {
         }
 
         cilent.stop();
+
     }
 }

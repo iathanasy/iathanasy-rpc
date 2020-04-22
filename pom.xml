@@ -28,7 +28,7 @@
     </properties>
 
     <!-- 依赖声明 -->
-    <!-- 依赖声 >>> 子 module 中需要的时候自己引入，无需要带版本号 -->
+    <!-- 子 module 中需要的时候自己引入，无需要带版本号 -->
     <dependencyManagement>
         <dependencies>
 
@@ -74,8 +74,6 @@
                 <artifactId>curator-recipes</artifactId>
                 <version>${curator.version}</version>
             </dependency>
-
-
 
             <dependency>
                 <groupId>junit</groupId>
