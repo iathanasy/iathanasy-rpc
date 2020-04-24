@@ -34,7 +34,6 @@ public class ChatServerHandler extends SimpleChannelInboundHandler<Packet> {
     protected void channelRead0(ChannelHandlerContext ctx, Packet packet) throws Exception {
         //处理是什么指令
         if(packet instanceof PacketMessage) {
-            System.err.println(packet);
             //廣播
             broadcast(ctx, (PacketMessage)packet);
         }

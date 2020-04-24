@@ -47,6 +47,9 @@ public class ChatTcpClient {
                         }
                     });
             Channel channel = b.connect("127.0.0.1", 5891).sync().channel();
+
+            //
+            System.out.println("Enter message commands (bye to end)");
             ChannelFuture future = null;
             PacketMessage message = new PacketMessage();
             message.setFrom(channel.id().toString());
