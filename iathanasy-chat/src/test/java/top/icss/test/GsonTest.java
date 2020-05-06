@@ -5,6 +5,11 @@ import top.icss.chat.command.Command;
 import top.icss.chat.entity.Packet;
 import top.icss.chat.entity.PacketAuth;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
+
 /**
  * @author cd
  * @desc
@@ -32,5 +37,19 @@ public class GsonTest {
 
         Packet packet1 = gson.fromJson(json, PacketAuth.class);
         System.out.println(packet1);
+
+        int count = 16;
+        // >> 右移  << 左移
+        System.out.println(count >> 1 << 1);
+        System.out.println(count >> 5); //减 一半 2一半的一半
+        System.out.println(count << 2); //加 上当前
+
+        System.out.println(-16 >>> 1);
+
+
+        System.out.println((count - 1) >> 1);
+
+        System.out.println((count & 1));
+
     }
 }

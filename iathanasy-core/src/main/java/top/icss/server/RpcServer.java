@@ -5,19 +5,18 @@ import io.netty.channel.*;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
+import io.netty.handler.timeout.IdleStateHandler;
 import io.netty.util.concurrent.DefaultThreadFactory;
 import lombok.extern.slf4j.Slf4j;
 import top.icss.codec.PacketCodec;
 import top.icss.codec.Spliter;
 import top.icss.register.RegisterMeta;
 import top.icss.register.ServiceRegister;
+import top.icss.server.handler.HeartBeatServerHandler;
 import top.icss.server.handler.RpcServerHandler;
 import top.icss.utils.IocContainer;
-import top.icss.utils.NetUtil;
-import top.icss.utils.ReflectUtils;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -73,17 +72,19 @@ public class RpcServer {
             b.group(boss, work)
                     .channel(NioServerSocketChannel.class)
                     .option(ChannelOption.SO_BACKLOG, 128)
-                    //.handler(new LoggingHandler(LogLevel.INFO))
+//                    .handler(new LoggingHandler(LogLevel.INFO))
                     .childHandler(new ChannelInitializer<SocketChannel>() {
                         @Override
                         protected void initChannel(SocketChannel channel) throws Exception {
                             ChannelPipeline pipeline = channel.pipeline();
-
+                            //心跳
+                            pipeline.addLast(new IdleStateHandler(10,0,0));
                             pipeline.addLast(new Spliter());
                             //编解码
                             pipeline.addLast(PacketCodec.INSTANCE);
                             //业务处理
                             pipeline.addLast(biz, RpcServerHandler.INSTANCE.setBeans(serviceMap));
+                            pipeline.addLast(new HeartBeatServerHandler());
                         }
                     });
             ChannelFuture future = b.bind(port).sync();

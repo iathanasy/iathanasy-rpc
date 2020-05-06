@@ -9,6 +9,9 @@ import top.icss.rpc.service.HelloService;
 import top.icss.rpc.service.TestService;
 import top.icss.serializer.SerializerAlgorithm;
 
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
 /**
  * @author cd
  * @desc 客户端使用
@@ -16,27 +19,41 @@ import top.icss.serializer.SerializerAlgorithm;
  * @since 1.0.0
  */
 public class RpcClientTest {
+
     public static void main(String[] args) throws Exception {
         RpcCilent cilent = RpcCilent.getInstance();
         cilent.start();
-
+        int count = Integer.MAX_VALUE;
         ServiceDiscovery serviceDiscovery = new ZkServiceDiscovery();
         RpcClientProxy proxy = new RpcClientJdkProxyImpl(serviceDiscovery, SerializerAlgorithm.DEFAULT);
+
         HelloService helloService = proxy.getProxyService(HelloService.class);
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < count; i++) {
             String hello = helloService.hello("World " + i);
-            System.out.println(hello);
-            Thread.sleep(500);
+            System.out.println(Thread.currentThread().getName() + "::" + hello);
+            try {
+                Thread.sleep(50);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
+
+        Thread.sleep(20 * 1000);
 
         TestService testService = proxy.getProxyService(TestService.class);
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < count; i++) {
             Integer sum = testService.test(i, (i + i));
-            System.out.println(sum);
-            Thread.sleep(500);
+            System.out.println(Thread.currentThread().getName() + "::" + sum);
+            try {
+                Thread.sleep(50);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
 
-        cilent.stop();
+
+
+        //cilent.stop();
 
     }
 }

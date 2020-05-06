@@ -1,5 +1,6 @@
 package top.icss.rpc;
 
+import top.icss.memory.DirectMemoryMonitor;
 import top.icss.register.ZkServiceRegister;
 import top.icss.server.RpcServer;
 
@@ -15,8 +16,10 @@ import top.icss.server.RpcServer;
 public class RpcServerTest {
     public static void main(String[] args) throws Exception {
         RpcServer server = new RpcServer(new ZkServiceRegister(),5893);
+        new DirectMemoryMonitor().startReport();
         //扫描
         server.init("top.icss.rpc");
         server.start();
+
     }
 }

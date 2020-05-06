@@ -23,6 +23,11 @@ public class RpcClientHandler  extends SimpleChannelInboundHandler<ResponsePacke
     }
 
     @Override
+    public void channelInactive(ChannelHandlerContext ctx) throws Exception {
+        RpcCilent.getInstance().stop();
+    }
+
+    @Override
     public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
         cause.printStackTrace();
         log.error("Exception：" + cause.getMessage());
