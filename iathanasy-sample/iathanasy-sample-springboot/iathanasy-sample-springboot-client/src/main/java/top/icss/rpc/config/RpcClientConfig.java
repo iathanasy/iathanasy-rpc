@@ -32,8 +32,8 @@ public class RpcClientConfig {
         ServiceDiscovery serviceDiscovery = new ZkServiceDiscovery(address);
         //Rpc客户端代理： 默认jdk代理;
         // protocolType(协议类型): 默认 1 rpc协议
-        // serializeType(序列化): 默认 1 Protostuff， 2 java ，3 json 未实现
-        RpcClientProxy proxy = new RpcClientJdkProxyImpl(serviceDiscovery, SerializerAlgorithm.DEFAULT);
+        // serializeType(序列化): 默认 1 Protostuff， 2 java ，3 json
+        RpcClientProxy proxy = new RpcClientJdkProxyImpl(serviceDiscovery, SerializerAlgorithm.JSON);
 
         RpcSpringClientFactory factory = new RpcSpringClientFactory(client, proxy);
         log.info(">>>>>>>>>>> rpc invoker config init finish.");
