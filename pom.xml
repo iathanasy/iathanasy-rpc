@@ -11,11 +11,7 @@
 
     <modules>
         <module>iathanasy-core</module>
-<<<<<<< HEAD
-=======
-        <module>iathanasy-chat</module>
         <module>iathanasy-sample</module>
->>>>>>> init
     </modules>
 
     <!-- 依赖版本集中管理 -->
