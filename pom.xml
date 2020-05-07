@@ -23,6 +23,7 @@
         <lombok.version>1.18.12</lombok.version>
         <protostuff.version>1.0.10</protostuff.version>
         <objenesis.version>2.4</objenesis.version>
+        <fastjson.version>1.2.29</fastjson.version>
         <junit.version>4.11</junit.version>
         <spring.version>5.2.5.RELEASE</spring.version>
         <spring-boot.version>2.2.5.RELEASE</spring-boot.version>
@@ -71,6 +72,13 @@
                 <groupId>org.objenesis</groupId>
                 <artifactId>objenesis</artifactId>
                 <version>${objenesis.version}</version>
+            </dependency>
+
+            <!-- Json -->
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>fastjson</artifactId>
+                <version>${fastjson.version}</version>
             </dependency>
 
             <!-- zk -->

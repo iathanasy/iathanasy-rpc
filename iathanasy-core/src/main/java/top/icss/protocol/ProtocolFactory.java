@@ -9,6 +9,7 @@ import top.icss.serializer.Serializer;
 import top.icss.serializer.SerializerAlgorithm;
 import top.icss.serializer.impl.DefaultSerializer;
 import top.icss.serializer.impl.JavaSerializer;
+import top.icss.serializer.impl.JsonSerializer;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -32,6 +33,7 @@ public class ProtocolFactory {
         serializerMap = new HashMap<Byte, Serializer>();
         serializerMap.put(SerializerAlgorithm.JAVA, new JavaSerializer());
         serializerMap.put(SerializerAlgorithm.DEFAULT, new DefaultSerializer());
+        serializerMap.put(SerializerAlgorithm.JSON, new JsonSerializer());
 
         commandMap = new HashMap<Byte, Class<? extends Packet>>();
         commandMap.put(Command.REQUEST, RequestPacket.class);

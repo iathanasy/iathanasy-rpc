@@ -12,7 +12,7 @@ public interface SerializerAlgorithm {
     byte DEFAULT = 1;
     //Java
     byte JAVA = 2;
-    //json 未实现
+    //json
     byte JSON = 3;
 
 }

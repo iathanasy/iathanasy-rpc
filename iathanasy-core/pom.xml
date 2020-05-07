@@ -46,6 +46,12 @@
             <artifactId>protostuff-runtime</artifactId>
         </dependency>
 
+        <!-- Json -->
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+        </dependency>
+
         <!--zk curator-->
         <dependency>
             <groupId>org.apache.curator</groupId>
