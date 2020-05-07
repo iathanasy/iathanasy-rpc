@@ -8,10 +8,11 @@ package top.icss.serializer;
  */
 public interface SerializerAlgorithm {
 
+    //Protostuff
     byte DEFAULT = 1;
-
+    //Java
     byte JAVA = 2;
-
+    //json 未实现
     byte JSON = 3;
 
 }

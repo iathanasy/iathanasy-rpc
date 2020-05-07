@@ -1,0 +1,10 @@
+server:
+  # 服务器的HTTP端口，默认为80
+  port: 8088
+
+# rpc
+rpc:
+  server:
+    port: 5893
+  registry:
+    address: 127.0.0.1:2181

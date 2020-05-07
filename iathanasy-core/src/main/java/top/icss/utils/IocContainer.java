@@ -24,7 +24,7 @@ public class IocContainer {
     public IocContainer(String packageName){
         doScanner(packageName);
         doInstance();
-        doAutowired();
+        //doAutowired();
     }
 
     public IocContainer(){}
@@ -59,7 +59,7 @@ public class IocContainer {
                 if(cls.isInterface()){
                     beanName = cls.getName();
                 }else {
-                    beanName = ("".equals(rpcService.value().trim())) ? toLowerFirstWord(cls.getSimpleName()) : rpcService.value();
+                    beanName = ("".equals(rpcService.value().trim())) ? StringUtil.toLowerFirstWord(cls.getSimpleName()) : rpcService.value();
                 }
                 try {
 
@@ -107,7 +107,7 @@ public class IocContainer {
                     if(icls.isInterface()){
                         beanName = icls.getName();
                     }else {
-                        beanName = ("".equals(rpcAutowired.value().trim())) ? toLowerFirstWord(icls.getName()) : rpcAutowired.value();
+                        beanName = ("".equals(rpcAutowired.value().trim())) ? StringUtil.toLowerFirstWord(icls.getName()) : rpcAutowired.value();
                     }
                     //获取当前类实例
                     Object obj = entry.getValue();
@@ -136,21 +136,10 @@ public class IocContainer {
         if(cls.isInterface()){
             beanName = cls.getName();
         }else {
-            beanName = ("".equals(rpcService.value().trim())) ? toLowerFirstWord(cls.getSimpleName()) : rpcService.value();
+            beanName = ("".equals(rpcService.value().trim())) ? StringUtil.toLowerFirstWord(cls.getSimpleName()) : rpcService.value();
         }
 
         return (T) beans.get(beanName);
-    }
-
-    /**
-     * 将字符串首字母转换为小写
-     * @param name
-     * @return
-     */
-    private String toLowerFirstWord(String name) {
-        char[] charArray = name.toCharArray();
-        charArray[0] += 32;
-        return String.valueOf(charArray);
     }
 
 }

@@ -4,6 +4,8 @@ import top.icss.memory.DirectMemoryMonitor;
 import top.icss.register.ZkServiceRegister;
 import top.icss.server.RpcServer;
 
+import java.util.concurrent.TimeUnit;
+
 /**
  * @author cd
  * @desc 暴露服务
@@ -21,5 +23,10 @@ public class RpcServerTest {
         server.init("top.icss.rpc");
         server.start();
 
+        while (!Thread.currentThread().isInterrupted()) {
+            TimeUnit.HOURS.sleep(1);
+        }
+
+        server.stop();
     }
 }

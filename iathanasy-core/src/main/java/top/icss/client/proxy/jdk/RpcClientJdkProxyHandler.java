@@ -1,7 +1,7 @@
 package top.icss.client.proxy.jdk;
 
 import lombok.extern.slf4j.Slf4j;
-import top.icss.client.RpcCilent;
+import top.icss.client.RpcClient;
 import top.icss.client.RpcCilentFactory;
 import top.icss.entity.RequestPacket;
 import top.icss.entity.ResponsePacket;
@@ -76,7 +76,7 @@ public class RpcClientJdkProxyHandler implements InvocationHandler {
 
         ResponsePacket response = null;
         try {
-            RpcCilent client = RpcCilentFactory.getInstance().getClient(host, port);
+            RpcClient client = RpcCilentFactory.getInstance().getClient(host, port);
             client.sendRequest(request);
 
             response = RpcCilentFactory.getInstance().task();

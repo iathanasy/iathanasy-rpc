@@ -18,6 +18,7 @@ import top.icss.utils.IocContainer;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author cd
@@ -30,8 +31,8 @@ public class RpcServer {
 
     private int threadNum = Runtime.getRuntime().availableProcessors() * 2;
     private int port;
-    private Map<String, Object> serviceMap = new HashMap<>();
-    private ServiceRegister serviceRegistry;
+    protected Map<String, Object> serviceMap = new HashMap<>();
+    protected ServiceRegister serviceRegistry;
 
     final EventLoopGroup boss = new NioEventLoopGroup(1, new DefaultThreadFactory("boss"));
     final EventLoopGroup work = new NioEventLoopGroup(threadNum, new DefaultThreadFactory("work"));
@@ -77,8 +78,9 @@ public class RpcServer {
                         @Override
                         protected void initChannel(SocketChannel channel) throws Exception {
                             ChannelPipeline pipeline = channel.pipeline();
-                            //心跳
-                            pipeline.addLast(new IdleStateHandler(10,0,0));
+                            //心跳 5分钟读写 10 分钟 读写超时
+                            pipeline.addLast(new IdleStateHandler(5,5,10, TimeUnit.MINUTES));
+
                             pipeline.addLast(new Spliter());
                             //编解码
                             pipeline.addLast(PacketCodec.INSTANCE);

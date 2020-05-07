@@ -15,9 +15,8 @@ import top.icss.codec.PacketCodec;
 import top.icss.codec.Spliter;
 import top.icss.entity.RequestPacket;
 import top.icss.entity.ResponsePacket;
-import top.icss.serializer.SerializerAlgorithm;
 
-import java.util.concurrent.TimeUnit;
+import java.net.InetSocketAddress;
 
 /**
  * @author cd
@@ -26,10 +25,7 @@ import java.util.concurrent.TimeUnit;
  * @since 1.0.0
  */
 @Slf4j
-public class RpcCilent {
-
-    private static String host = "127.0.0.1";
-    private static int port = 5891;
+public class RpcClient {
 
     private static int threadNum = Runtime.getRuntime().availableProcessors() * 2;
     private final static EventLoopGroup work = new NioEventLoopGroup(threadNum, new DefaultThreadFactory("work"));
@@ -39,9 +35,9 @@ public class RpcCilent {
 
     static RpcClientHandler handler = new RpcClientHandler();
 
-    public final static RpcCilent INSTANCE = new RpcCilent();
+    public final static RpcClient INSTANCE = new RpcClient();
 
-    public static RpcCilent getInstance(){
+    public static RpcClient getInstance(){
         return INSTANCE;
     }
 
@@ -85,14 +81,14 @@ public class RpcCilent {
      * @return
      * @throws Exception
      */
-    public RpcCilent createConnect(String host, int port) throws Exception{
+    public RpcClient createConnect(String host, int port) throws Exception{
         future = b.connect(host, port).sync();
         future.awaitUninterruptibly();
         if(future.isSuccess()){
             log.info("Create connection to " + host + ":" + port + " success!");
             String key="/"+host+":"+port;
-            RpcCilentFactory.getInstance().putClient(key, RpcCilent.getInstance());
-            return RpcCilent.getInstance();
+            RpcCilentFactory.getInstance().putClient(key, RpcClient.getInstance());
+            return RpcClient.getInstance();
         }
         if (!future.isDone()) {
             log.error("Create connection to " + host + ":" + port + " timeout!");
@@ -149,6 +145,11 @@ public class RpcCilent {
                     RpcCilentFactory.getInstance().offer(response);
                 }
             });
+        }else{
+            //通道关闭，移除客户端缓存
+            InetSocketAddress socketAddress = (InetSocketAddress) future.channel().remoteAddress();
+            String key = socketAddress.toString();
+            RpcCilentFactory.getInstance().removeClient(key);
         }
     }
 
