@@ -1,6 +1,6 @@
 server:
   # 服务器的HTTP端口，默认为80
-  port: 8089
+  port: 8081
 
 
 # rpc

@@ -5,7 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 /**
  * @author cd
- * @desc
+ * @desc 客户端启动
  * @create 2020/5/6 17:01
  * @since 1.0.0
  */
