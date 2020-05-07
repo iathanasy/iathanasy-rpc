@@ -1,5 +1,8 @@
 # iathanasy-rpc
 简单rpc远程调用
 
-# iathanasy-chat
-简单实现websocket与tcp互相通信
+## iathanasy-core
+rpc核心
+
+## iathanasy-sample
+rpc使用test 
