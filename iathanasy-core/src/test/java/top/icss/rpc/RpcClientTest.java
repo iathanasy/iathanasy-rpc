@@ -1,6 +1,6 @@
 package top.icss.rpc;
 
-import top.icss.client.RpcCilent;
+import top.icss.client.RpcClient;
 import top.icss.client.proxy.RpcClientProxy;
 import top.icss.client.proxy.jdk.RpcClientJdkProxyImpl;
 import top.icss.register.discover.ServiceDiscovery;
@@ -9,19 +9,19 @@ import top.icss.rpc.service.HelloService;
 import top.icss.rpc.service.TestService;
 import top.icss.serializer.SerializerAlgorithm;
 
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author cd
  * @desc 客户端使用
  * @create 2020/4/16 14:56
  * @since 1.0.0
+ *
  */
 public class RpcClientTest {
 
     public static void main(String[] args) throws Exception {
-        RpcCilent cilent = RpcCilent.getInstance();
+        RpcClient cilent = RpcClient.getInstance();
         cilent.start();
         int count = Integer.MAX_VALUE;
         ServiceDiscovery serviceDiscovery = new ZkServiceDiscovery();
@@ -51,9 +51,11 @@ public class RpcClientTest {
             }
         }
 
+        while (!Thread.currentThread().isInterrupted()) {
+            TimeUnit.HOURS.sleep(1);
+        }
 
-
-        //cilent.stop();
+        cilent.stop();
 
     }
 }

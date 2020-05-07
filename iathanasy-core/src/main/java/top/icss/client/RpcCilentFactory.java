@@ -17,7 +17,7 @@ public class RpcCilentFactory {
     /**
      * 客户端
      */
-    private Map<String, RpcCilent> rpcClient = new ConcurrentHashMap<String, RpcCilent>();
+    private Map<String, RpcClient> rpcClient = new ConcurrentHashMap<String, RpcClient>();
 
     /**
      * 返回
@@ -36,16 +36,16 @@ public class RpcCilentFactory {
     }
 
 
-    public void putClient(String key, RpcCilent cilent){
+    public void putClient(String key, RpcClient cilent){
         rpcClient.put(key, cilent);
     }
 
-    public RpcCilent getClient(String host, int port) throws Exception {
+    public RpcClient getClient(String host, int port) throws Exception {
         String key ="/"+host+":"+port;
         if(rpcClient.containsKey(key)){
             return rpcClient.get(key);
         }
-        return RpcCilent.getInstance().createConnect(host, port);
+        return RpcClient.getInstance().createConnect(host, port);
     }
 
     public void removeClient(String key){

@@ -6,6 +6,9 @@ import io.netty.channel.SimpleChannelInboundHandler;
 import lombok.extern.slf4j.Slf4j;
 import top.icss.entity.ResponsePacket;
 
+import java.net.InetSocketAddress;
+import java.net.SocketAddress;
+
 /**
  * @author cd
  * @desc
@@ -24,7 +27,10 @@ public class RpcClientHandler  extends SimpleChannelInboundHandler<ResponsePacke
 
     @Override
     public void channelInactive(ChannelHandlerContext ctx) throws Exception {
-        RpcCilent.getInstance().stop();
+        InetSocketAddress socketAddress = (InetSocketAddress) ctx.channel().remoteAddress();
+        String key = socketAddress.toString();
+        RpcCilentFactory.getInstance().removeClient(key);
+        log.info("channelInactive:localAddress-->{},-->remoteAddress{} ",ctx.channel().localAddress(),socketAddress);
     }
 
     @Override
