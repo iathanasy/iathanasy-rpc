@@ -11,7 +11,6 @@
 
     <modules>
         <module>iathanasy-core</module>
-        <module>iathanasy-chat</module>
         <module>iathanasy-sample</module>
     </modules>
 
