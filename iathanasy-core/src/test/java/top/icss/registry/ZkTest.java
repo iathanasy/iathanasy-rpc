@@ -8,6 +8,8 @@ import org.apache.curator.framework.recipes.cache.PathChildrenCacheListener;
 import org.apache.curator.retry.ExponentialBackoffRetry;
 import top.icss.register.ZkConstant;
 
+import java.util.List;
+
 /**
  * @author cd
  * @desc
@@ -31,7 +33,7 @@ public class ZkTest {
 
     public static void main(String[] args) throws Exception {
         ZkTest zk = new ZkTest();
-        String s = "top.icss.rpc.service.HelloService";
+        /*String s = "top.icss.rpc.service.HelloService";
         String directory = String.format(ZkConstant.ZK_REGISTRY_PATH + "/%s", s);
 
         PathChildrenCache childrenCache = new PathChildrenCache(zk.client, directory, true);
@@ -53,7 +55,23 @@ public class ZkTest {
             }
         });
 
-        System.in.read();
+        System.in.read();*/
+
+        /**
+         * 查询服务列表
+         */
+        List<String> services = zk.client.getChildren().forPath(ZkConstant.ZK_REGISTRY_PATH);
+        services.stream().forEach(System.out::println);
+
+        services.stream().forEach((s)->{
+            try {
+                String directory = String.format(ZkConstant.ZK_REGISTRY_PATH + "/%s", s);
+                List<String> forPath = zk.client.getChildren().forPath(directory);
+                forPath.stream().forEach(System.out::println);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
 
     }
 }

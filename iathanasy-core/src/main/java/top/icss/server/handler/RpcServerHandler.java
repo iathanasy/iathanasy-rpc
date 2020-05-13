@@ -60,6 +60,7 @@ public class RpcServerHandler extends SimpleChannelInboundHandler<RequestPacket>
             Object result = invoke(request);
             response.setResult(result);
         } catch (Throwable t) {
+            log.error("rpc server invoke error: {}", t.getMessage());
             response.setError(t);
         }
         ctx.writeAndFlush(response);
@@ -86,16 +87,17 @@ public class RpcServerHandler extends SimpleChannelInboundHandler<RequestPacket>
         String className = request.getInterfaceClassName();
         String methodName = request.getMethodName();
         Object[] parameters = request.getParameters();
-
-        Class[] parameterTypes = new Class[parameters.length];
+        Class[] parameterTypes = request.getParameterTypes();
+        /*Class[] parameterTypes = new Class[parameters.length];
         for (int i = 0, length = parameters.length; i < length; i++) {
             parameterTypes[i] = parameters[i].getClass();
-        }
+        }*/
 
         //log.warn("服务端开始调用--> {}", request);
 
         Object serviceBean = beans.get(className);
         Method method = serviceBean.getClass().getMethod(methodName, parameterTypes);
+        method.setAccessible(true);
 
         Object result = method.invoke(serviceBean, parameters);
         return result;

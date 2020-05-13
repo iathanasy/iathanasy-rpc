@@ -1,17 +1,16 @@
-package top.icss.client.proxy.jdk;
+package top.icss.client.proxy.cglib;
 
+import net.sf.cglib.proxy.Enhancer;
 import top.icss.client.proxy.RpcClientProxy;
 import top.icss.register.discover.ServiceDiscovery;
 
-import java.lang.reflect.Proxy;
-
 /**
  * @author cd
- * @desc 只能对接口进行代理。如果要代理的类为一个普通类、没有接口，那么Java动态代理就没法使用了
- * @create 2020/4/16 11:45
+ * @desc cglib实现
+ * @create 2020/5/13 15:51
  * @since 1.0.0
  */
-public class RpcClientJdkProxyImpl implements RpcClientProxy {
+public class RpcClientCglibProxyImpl implements RpcClientProxy {
 
     /**
      * 服务发现
@@ -33,22 +32,22 @@ public class RpcClientJdkProxyImpl implements RpcClientProxy {
      */
     private int timeout;
 
-    public RpcClientJdkProxyImpl(ServiceDiscovery serviceDiscovery) {
+    public RpcClientCglibProxyImpl(ServiceDiscovery serviceDiscovery) {
         this.serviceDiscovery = serviceDiscovery;
     }
 
-    public RpcClientJdkProxyImpl(ServiceDiscovery serviceDiscovery, byte serializeType) {
+    public RpcClientCglibProxyImpl(ServiceDiscovery serviceDiscovery, byte serializeType) {
         this.serviceDiscovery = serviceDiscovery;
         this.serializeType = serializeType;
     }
 
-    public RpcClientJdkProxyImpl(ServiceDiscovery serviceDiscovery, byte protocolType, byte serializeType) {
+    public RpcClientCglibProxyImpl(ServiceDiscovery serviceDiscovery, byte protocolType, byte serializeType) {
         this.serviceDiscovery = serviceDiscovery;
         this.protocolType = protocolType;
         this.serializeType = serializeType;
     }
 
-    public RpcClientJdkProxyImpl(ServiceDiscovery serviceDiscovery, byte serializeType, int timeout) {
+    public RpcClientCglibProxyImpl(ServiceDiscovery serviceDiscovery, byte serializeType, int timeout) {
         this.serviceDiscovery = serviceDiscovery;
         this.serializeType = serializeType;
         this.timeout = timeout;
@@ -56,8 +55,11 @@ public class RpcClientJdkProxyImpl implements RpcClientProxy {
 
     @Override
     public <T> T getProxyService(Class<T> interfaceClass) {
-        return (T) Proxy.newProxyInstance(Thread.currentThread().getContextClassLoader(),
-                new Class[]{interfaceClass},
-                new RpcClientJdkProxyHandler(serviceDiscovery, protocolType, serializeType, timeout, interfaceClass));
+        Enhancer enhancer = new Enhancer();
+        enhancer.setSuperclass(interfaceClass);
+        enhancer.setCallback(new RpcClientCglibProxyHandler(serviceDiscovery, protocolType, serializeType, timeout, interfaceClass));
+        Object enhancedObject = enhancer.create();
+        return (T)enhancedObject;
     }
+
 }

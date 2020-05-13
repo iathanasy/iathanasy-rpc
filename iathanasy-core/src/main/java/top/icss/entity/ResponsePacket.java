@@ -2,6 +2,7 @@ package top.icss.entity;
 
 import lombok.Data;
 import lombok.ToString;
+import lombok.extern.slf4j.Slf4j;
 import top.icss.protocol.command.Command;
 import top.icss.protocol.impl.DefaultRpcProtocol;
 import top.icss.serializer.SerializerAlgorithm;
@@ -12,6 +13,7 @@ import top.icss.serializer.SerializerAlgorithm;
  * @create 2020/4/10 10:26
  * @since 1.0.0
  */
+@Slf4j
 @Data
 @ToString
 public class ResponsePacket extends Packet{

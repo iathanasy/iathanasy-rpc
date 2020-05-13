@@ -8,6 +8,7 @@ import top.icss.serializer.SerializerAlgorithm;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * @author cd
@@ -42,6 +43,10 @@ public class RequestPacket extends Packet{
     private Object[] parameters;
 
     /**
+     * 参数类型
+     */
+    private Class<?>[] parameterTypes;
+    /**
      * 时间戳
      */
     private transient long timestamp;
@@ -64,7 +69,17 @@ public class RequestPacket extends Packet{
     /**
      * 超时
      */
-    private int timeout = 0;
+    private int timeout = 1000;
+
+    public RequestPacket(){
+        this.id = get().toString();
+    }
+
+    private static final AtomicInteger requestIdSeq = new AtomicInteger();
+
+    public static Integer get(){
+        return requestIdSeq.incrementAndGet();
+    }
 
     public void putAttachment(String key, String value) {
         if (attachments == null) {

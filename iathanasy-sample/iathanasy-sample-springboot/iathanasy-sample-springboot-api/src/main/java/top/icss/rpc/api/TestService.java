@@ -8,6 +8,8 @@ package top.icss.rpc.api;
  */
 public interface TestService {
 
+    int avg(int x,int y);
+
     Integer test(Integer x, Integer y);
 
 }

@@ -23,7 +23,7 @@ public class RpcClientTest {
     public static void main(String[] args) throws Exception {
         RpcClient cilent = RpcClient.getInstance();
         cilent.start();
-        int count = Integer.MAX_VALUE;
+        int count = 10;
         ServiceDiscovery serviceDiscovery = new ZkServiceDiscovery();
         RpcClientProxy proxy = new RpcClientJdkProxyImpl(serviceDiscovery, SerializerAlgorithm.DEFAULT);
 

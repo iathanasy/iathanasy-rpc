@@ -15,6 +15,11 @@ import top.icss.rpc.api.TestService;
 public class TestServiceImpl implements TestService {
 
     @Override
+    public int avg(int x, int y) {
+        return (x + y) / 2;
+    }
+
+    @Override
     public Integer test(Integer x, Integer y) {
         return x + y;
     }

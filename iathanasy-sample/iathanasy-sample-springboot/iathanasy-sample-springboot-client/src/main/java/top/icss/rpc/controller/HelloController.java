@@ -4,6 +4,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import top.icss.annotation.RpcAutowired;
 import top.icss.rpc.api.HelloService;
+import top.icss.rpc.api.TestService;
 
 /**
  * @author cd
@@ -16,6 +17,8 @@ public class HelloController {
 
     @RpcAutowired
     private HelloService helloService;
+    @RpcAutowired
+    private TestService testService;
 
     @RequestMapping("hello")
     public String hello(String name) {
@@ -25,6 +28,16 @@ public class HelloController {
             e.printStackTrace();
             return e.getMessage();
         }
+    }
+
+    @RequestMapping("test")
+    public Integer test(Integer x, Integer y) {
+       return testService.test(x, y);
+    }
+
+    @RequestMapping("avg")
+    public int avg(int x, int y) {
+        return testService.avg(x, y);
     }
 
 }

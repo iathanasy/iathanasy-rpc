@@ -151,11 +151,17 @@ public class ZkServiceDiscovery implements ServiceDiscovery{
      * @throws Exception
      */
     private void updateServerList(String server) throws Exception{
-        for(String addr : servers){
-            if(addr.startsWith(server)) {//删除
-                deleteNode(addr);
+        Iterator<String> iterator = servers.iterator();
+        while (iterator.hasNext()){
+            if(iterator.next().startsWith(server)){
+                iterator.remove();
             }
         }
+        /*for(String addr : servers){
+            if(addr.startsWith(server)) {//删除
+                //deleteNode(addr);
+            }
+        }*/
     }
 
     /**

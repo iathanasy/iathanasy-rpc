@@ -7,6 +7,7 @@ import org.springframework.context.annotation.Configuration;
 import top.icss.client.RpcClient;
 import top.icss.client.RpcSpringClientFactory;
 import top.icss.client.proxy.RpcClientProxy;
+import top.icss.client.proxy.cglib.RpcClientCglibProxyImpl;
 import top.icss.client.proxy.jdk.RpcClientJdkProxyImpl;
 import top.icss.register.discover.ServiceDiscovery;
 import top.icss.register.discover.ZkServiceDiscovery;
@@ -25,15 +26,20 @@ public class RpcClientConfig {
     @Value("${rpc.registry.address}")
     private String address;
 
+    @Value("${rpc.timeout}")
+    private int timeout;
+
     @Bean
     public RpcSpringClientFactory clientFactory(){
         RpcClient client = RpcClient.getInstance();
         // zk服务发现
         ServiceDiscovery serviceDiscovery = new ZkServiceDiscovery(address);
-        //Rpc客户端代理： 默认jdk代理;
+        //Rpc客户端代理： jdk代理, cglib代理;
         // protocolType(协议类型): 默认 1 rpc协议
         // serializeType(序列化): 默认 1 Protostuff， 2 java ，3 json
-        RpcClientProxy proxy = new RpcClientJdkProxyImpl(serviceDiscovery, SerializerAlgorithm.JSON);
+        // timeout(超时)：毫秒
+        //RpcClientProxy proxy = new RpcClientJdkProxyImpl(serviceDiscovery, SerializerAlgorithm.JSON, timeout);
+        RpcClientProxy proxy = new RpcClientCglibProxyImpl(serviceDiscovery, SerializerAlgorithm.JSON, timeout);
 
         RpcSpringClientFactory factory = new RpcSpringClientFactory(client, proxy);
         log.info(">>>>>>>>>>> rpc invoker config init finish.");

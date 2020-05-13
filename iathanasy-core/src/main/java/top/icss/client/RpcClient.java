@@ -16,6 +16,7 @@ import top.icss.codec.Spliter;
 import top.icss.entity.RequestPacket;
 import top.icss.entity.ResponsePacket;
 
+import java.net.ConnectException;
 import java.net.InetSocketAddress;
 
 /**
@@ -82,8 +83,17 @@ public class RpcClient {
      * @throws Exception
      */
     public RpcClient createConnect(String host, int port) throws Exception{
-        future = b.connect(host, port).sync();
-        future.awaitUninterruptibly();
+        try {
+            future = b.connect(host, port).sync();
+            future.awaitUninterruptibly();
+        }catch (Exception e){
+            if(e instanceof ConnectException){
+                String key="/"+host+":"+port;
+                RpcCilentFactory.getInstance().removeClient(key);
+                log.error("Create connection to " + host + ":" + port + " error", future.cause());
+                throw new Exception("Create connection to " + host + ":" + port + " error", future.cause());
+            }
+        }
         if(future.isSuccess()){
             log.info("Create connection to " + host + ":" + port + " success!");
             String key="/"+host+":"+port;
@@ -142,7 +152,6 @@ public class RpcClient {
                     response.setProtocolType(request.getProtocolType());
                     response.setSerializeType(request.getSerializeType());
                     response.setError(new Throwable(errorMsg));
-                    RpcCilentFactory.getInstance().offer(response);
                 }
             });
         }else{

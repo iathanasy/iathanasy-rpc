@@ -21,7 +21,7 @@ public class RpcClientHandler  extends SimpleChannelInboundHandler<ResponsePacke
 
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, ResponsePacket response) throws Exception {
-        RpcCilentFactory.getInstance().offer(response);
+        RpcCilentFactory.getInstance().receiveResponse(response);
         log.info("channelRead0: "+ response);
     }
 
