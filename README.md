@@ -44,7 +44,7 @@ rpc使用test
 
 > 访问  
 
-1. (admin)[http://127.0.0.1:9507/admin]
-2. (hello)[http://127.0.0.1:8081/hello?name=World]
-3. (test)[http://127.0.0.1:8081/test?x=1&y=3]
-4. (avg)[http://127.0.0.1:8081/avg?x=1&y=8]
+1. [admin](http://127.0.0.1:9507/admin)
+2. [hello](http://127.0.0.1:8081/hello?name=World)
+3. [test](http://127.0.0.1:8081/test?x=1&y=3)
+4. [avg](http://127.0.0.1:8081/avg?x=1&y=8)
