@@ -24,7 +24,7 @@
         <lombok.version>1.18.12</lombok.version>
         <protostuff.version>1.0.10</protostuff.version>
         <objenesis.version>2.4</objenesis.version>
-        <fastjson.version>1.2.29</fastjson.version>
+        <fastjson.version>1.2.83</fastjson.version>
         <junit.version>4.13.1</junit.version>
         <spring.version>5.2.22.RELEASE</spring.version>
         <spring-boot.version>2.2.5.RELEASE</spring-boot.version>
