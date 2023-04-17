@@ -26,7 +26,7 @@
         <objenesis.version>2.4</objenesis.version>
         <fastjson.version>1.2.29</fastjson.version>
         <junit.version>4.13.1</junit.version>
-        <spring.version>5.2.22.RELEASE</spring.version>
+        <spring.version>5.2.24.RELEASE</spring.version>
         <spring-boot.version>2.2.5.RELEASE</spring-boot.version>
         <curator.version>4.0.1</curator.version>
         <zookeeper.version>3.4.14</zookeeper.version>
